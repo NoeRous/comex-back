@@ -5,6 +5,7 @@ const app = express();
 const port = 3001;
 const { sequelize } = require('./connection');
 const { Author, Book } = require('./models');
+const { Sequelize } = require('sequelize');
 
 app.use(bodyParser.json());
 
@@ -93,6 +94,21 @@ app.get('/authors', async (req, res) => {
       return res.status(500).json({ message: 'Internal server error' });
     }
   });
+
+  app.get('/actividad', async (req, res) => {
+    try {
+      const actividades = await sequelize.query('select * from actividad',{type: Sequelize.QueryTypes.SELECT});
+
+      console.log('actividades',actividades);
+      return res.json({ actividades });
+      
+    } catch (error) {
+      console.log('Error', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
+
   
   sequelize
     .authenticate()

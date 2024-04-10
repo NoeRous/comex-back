@@ -8,6 +8,7 @@ const host = "localhost";
 const sequelize = new Sequelize(database, username, password, {
   host: host,
   dialect: 'postgres',
+  
 });*/
 
 const database = "BDComexPentaho";
@@ -24,7 +25,6 @@ const sequelize = new Sequelize(database, username, password, {
     }
   }
 });
-
 
 module.exports = {
   sequelize

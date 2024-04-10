@@ -1,4 +1,4 @@
 Proyecto back
-
-* para inicial proyecto: node index.js
+* paso 1 : npm install
+* para inicial proyecto: npm start
   

@@ -12,9 +12,7 @@ const router = require('./router/api');
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 
-// Habilitar CORS para todas las solicitudes
-app.use(cors());
-
+//cors
 app.use(cors({
     origin: 'http://localhost:4200' // Origen permitido
   }));

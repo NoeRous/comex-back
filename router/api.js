@@ -8,6 +8,7 @@ const variablesCualitativasController = require('../controllers/variablesCualita
 const paisController = require('../controllers/paisController');
 const medioController = require('../controllers/medioController');
 const viaController = require('../controllers/viaController');
+const aduanaController = require('../controllers/aduanaController');
 
 const router = express.Router();
 
@@ -21,14 +22,15 @@ router.get('/flujos', flujoController.index);
 router.get('/cuantitativas', variablesCuantitativasController.index);
 router.get('/tiempo/periodicidad', tiempoController.indexPeriodicidad);
 router.get('/tiempo/gestiones', tiempoController.indexGestiones);
-router.get('/cualitativas', variablesCualitativasController.index);
-
 //paso 2 
+router.get('/cualitativas/flujo/:codFlujo', variablesCualitativasController.index);
 router.get('/departamentos', departamentoController.index);
 router.get('/pais/continentes', paisController.indexContinentes);
 router.get('/pais/paises', paisController.indexPaisesDestino);
 router.get('/medios', medioController.index);
 router.get('/vias', viaController.index);
+
+router.get('/aduanas', aduanaController.index);
 
 router.get('/cualitativas/sub/:codSub', variablesCualitativasController.indexSub);
 

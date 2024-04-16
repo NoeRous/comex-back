@@ -8,6 +8,7 @@ const variablesCualitativasController = require('../controllers/variablesCualita
 const paisController = require('../controllers/paisController');
 const medioController = require('../controllers/medioController');
 const viaController = require('../controllers/viaController');
+
 const router = express.Router();
 
 
@@ -28,5 +29,8 @@ router.get('/pais/continentes', paisController.indexContinentes);
 router.get('/pais/paises', paisController.indexPaisesDestino);
 router.get('/medios', medioController.index);
 router.get('/vias', viaController.index);
+
+router.get('/cualitativas/sub/:codSub', variablesCualitativasController.indexSub);
+
 
 module.exports = router;

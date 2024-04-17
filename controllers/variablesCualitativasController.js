@@ -248,6 +248,22 @@ async function indexSub(req, res) {
             data =  await sequelize.query('select cod_tradicional as cod_niv3,des_tradicional as des_niv3, cod_tradicional_clase as cod_niv2, des_tradicional_clase as des_niv2, cod_tnt as cod_niv1,des_tnt as des_niv1 from tnt where cod_tradicional is not null group by cod_tradicional_clase,des_tradicional_clase,cod_tradicional,des_tradicional,cod_tnt,des_tnt order by cod_tradicional_clase',{type: Sequelize.QueryTypes.SELECT});
             tipoRes = 'listadoAgrupadoDoble';
          break;
+         case "21":
+            data =  await sequelize.query('select cod_cuo as cod_niv1, des_cuo as des_niv1 from cuode group by cod_cuo, des_cuo order by cod_cuo',{type: Sequelize.QueryTypes.SELECT});
+            tipoRes = 'listado';
+         break;
+         case "22":
+            data =  await sequelize.query('select cod_cuo as cod_niv2, des_cuo as des_niv2, cod_grupo as cod_niv1, des_grupo as des_niv1 from cuode group by cod_cuo, des_cuo,cod_grupo,des_grupo order by cod_cuo',{type: Sequelize.QueryTypes.SELECT});
+            tipoRes = 'listadoAgrupado';
+         break;
+         case "23":
+            data =  await sequelize.query('select cod_cuo as cod_niv3, des_cuo as des_niv3, cod_grupo as cod_niv2, des_grupo as des_niv2, cod_subgrupo as cod_niv1, des_subgrupo as des_niv1 from cuode group by cod_cuo, des_cuo,cod_grupo,des_grupo,cod_subgrupo,des_subgrupo order by cod_cuo',{type: Sequelize.QueryTypes.SELECT});
+            tipoRes = 'listadoAgrupadoDoble';
+         break;
+         case "24":
+            data =  await sequelize.query('select cod_cuo as cod_niv4, des_cuo as des_niv4, cod_grupo as cod_niv3, des_grupo as des_niv3, cod_subgrupo as cod_niv2, des_subgrupo as des_niv2, cod_cuode as cod_niv1, des_cuode as des_niv1 from cuode group by cod_cuo, des_cuo,cod_grupo,des_grupo,cod_subgrupo,des_subgrupo, cod_cuode, des_cuode order by cod_cuo',{type: Sequelize.QueryTypes.SELECT});
+            tipoRes = 'listadoAgrupadoTriple';
+         break;
         default:
             data = "Ese no es un dato válido";
             tipoRes = '';

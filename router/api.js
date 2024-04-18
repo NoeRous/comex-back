@@ -23,7 +23,8 @@ router.get('/cuantitativas', variablesCuantitativasController.index);
 router.get('/tiempo/periodicidad', tiempoController.indexPeriodicidad);
 router.get('/tiempo/gestiones', tiempoController.indexGestiones);
 //paso 2 
-router.get('/cualitativas/flujo/:codFlujo', variablesCualitativasController.index);
+router.get('/cualitativas/c_flujo/:codFlujo', variablesCualitativasController.index);
+router.get('/cualitativas/n_flujo/:codFlujo', variablesCualitativasController.indexNandina);
 router.get('/departamentos', departamentoController.index);
 router.get('/pais/continentes', paisController.indexContinentes);
 router.get('/pais/paises', paisController.indexPaisesDestino);

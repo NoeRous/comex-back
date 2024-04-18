@@ -1,9 +1,10 @@
 const { sequelize } = require('../connection');
 const { Sequelize } = require('sequelize');
 
-function index(req, res) {
+function indexNandina(req, res){
     var cualitativas =   [
     	{
+            "cod_clas":1,
             "des": 'Productos según la Nomenclatura Común de Designación y Codificación de Mercancías de Países Miembros de la Comunidad Andina (NANDINA)',
             "cod_flujo":[1,2,3,4],
             "children":[  
@@ -24,7 +25,47 @@ function index(req, res) {
                 }
             ]
     	},
+    ];
+
+    const codFlujo =  parseInt(req.params.codFlujo);
+    var cualitativasA = [];
+    for (const cualitativa of cualitativas) {
+        if (cualitativa.cod_flujo.some(elemento => elemento === codFlujo)) {
+            cualitativasA.push(cualitativa);
+        }
+    }
+    cualitativas = cualitativasA
+
+    res.status(200).json({ cualitativas });
+
+}
+
+function index(req, res) {
+    var cualitativas =   [
+    	/*{
+            "cod_clas":1,
+            "des": 'Productos según la Nomenclatura Común de Designación y Codificación de Mercancías de Países Miembros de la Comunidad Andina (NANDINA)',
+            "cod_flujo":[1,2,3,4],
+            "children":[  
+                {  "cod_sub":1,
+                    "des":"Sección NANDINA",
+                },
+                {  
+                    "cod_sub":2,
+                    "des":"Capítulo NANDINA",
+                },
+                {  
+                    "cod_sub":3,
+                    "des":"Partida NANDINA",
+                },
+                {  
+                    "cod_sub":4,
+                    "des":"NANDINA",
+                }
+            ]
+    	},*/
         {
+            "cod_clas":2,
             "des": 'Clasificación Uniforme del Comercio Internacional (CUCI Rev.3)',
             "cod_flujo":[1,2,3,4],
             "children":[  
@@ -47,6 +88,7 @@ function index(req, res) {
             ]
     	},
         {
+            "cod_clas":3,
             "des": 'Clasificación Internacional Industrial Uniforme (CIIU Rev.3)',
             "cod_flujo":[1,2,3,4],
             "children":[  
@@ -69,6 +111,7 @@ function index(req, res) {
             ]
     	},
         {
+            "cod_clas":4,
             "des": 'Clasificación Grandes Categorías Económicas (GCE Rev.3)',
             "cod_flujo":[1,2,3,4],
             "children":[  
@@ -87,6 +130,7 @@ function index(req, res) {
             ]
     	},
         {
+            "cod_clas":5,
             "des": 'Clasificación Actividad Económica y Principales Productos',
             "cod_flujo":[1,2],
             "children":[  
@@ -101,6 +145,7 @@ function index(req, res) {
             ]
     	},
         {
+            "cod_clas":6,
             "des": 'Clasificación Productos Tradicionales y No Tradicionales',
             "cod_flujo":[1,2],
             "children":[  
@@ -119,6 +164,7 @@ function index(req, res) {
             ]
     	},
         {
+            "cod_clas":7,
             "des": 'Clasificación Uso o Destino Económico',
             "cod_flujo":[3],
             "children":[  
@@ -143,9 +189,6 @@ function index(req, res) {
 
     const codFlujo =  parseInt(req.params.codFlujo);
     var cualitativasA = [];
-
-    console.log('codFlujo',codFlujo)
-
     for (const cualitativa of cualitativas) {
         if (cualitativa.cod_flujo.some(elemento => elemento === codFlujo)) {
             cualitativasA.push(cualitativa);
@@ -274,6 +317,6 @@ async function indexSub(req, res) {
 
 
 module.exports = {
-    index,indexSub
+    index,indexSub,indexNandina
 }
 

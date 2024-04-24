@@ -10,6 +10,8 @@ const medioController = require('../controllers/medioController');
 const viaController = require('../controllers/viaController');
 const aduanaController = require('../controllers/aduanaController');
 
+const generarResultadoController = require('../controllers/generarResultadoController');
+
 const router = express.Router();
 
 
@@ -34,6 +36,11 @@ router.get('/vias', viaController.index);
 router.get('/aduanas', aduanaController.index);
 
 router.get('/cualitativas/sub/:codSub', variablesCualitativasController.indexSub);
+
+//resultado
+
+router.post('/resultado', generarResultadoController.resultadoExportacion);
+
 
 
 module.exports = router;

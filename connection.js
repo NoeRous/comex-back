@@ -11,7 +11,7 @@ const sequelize = new Sequelize(database, username, password, {
   
 });*/
 
-const database = "BDComexPentaho";
+const database = "BDComexPentahoPrueba";
 const username = "nrancari";
 const password = "3tWKrpgOXjEA";
 const host = "pruebacomexsql";

@@ -21,7 +21,9 @@ const sequelize = new Sequelize(database, username, password, {
   dialect: 'mssql',
   dialectOptions: {
     options: {
-      encrypt: false 
+      encrypt: false,
+      connectTimeout: 15000, // tiempo de espera para establecer la conexión
+      requestTimeout: 30000 // tiempo de espera para las solicitudes
     }
   }
 });

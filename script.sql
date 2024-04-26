@@ -30,7 +30,7 @@ inner join acteco ac on ac.cod_acteco  = et.cod_acteco;
 
 
 
--------------procedimiento
+-------------procedimiento desglozado
 
 
 CREATE PROCEDURE ConsultaDinamica
@@ -50,3 +50,23 @@ BEGIN
     '
     EXEC(@sqlQuery)
 END;
+
+
+---procedimiento totales
+
+CREATE PROCEDURE ConsultaDinamicaTotales
+    @var1 NVARCHAR(MAX),
+    @var2 NVARCHAR(MAX),
+    @var3 NVARCHAR(MAX)
+AS
+BEGIN
+    DECLARE @sqlQuery NVARCHAR(MAX)
+
+     SET @sqlQuery = '
+        SELECT ' + @var1 + ', ' + @var2 + '
+        FROM exportacion_todo_view
+        WHERE ' + @var3 + '
+    '
+    EXEC(@sqlQuery)
+END;
+

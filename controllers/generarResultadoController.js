@@ -15,17 +15,21 @@ async function resultadoExportacion(req, res) {
                 //var 1 armar info y var 3 
                 var inf_var1 = '';
                 var inf_var3 = '';
+                var inf_var4 = '';
                 const periocidad = postData.paso1Informacion.selectedPeriocidad;
                 const gestiones = postData.paso1Informacion.selectedGestiones;
                 if (periocidad && gestiones.length > 0) {
                     if (periocidad.cod_periodicidad == 1) {
                         inf_var1 = inf_var1 + 'gestion,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS gestion,`;
                     }
                     if (periocidad.cod_periodicidad == 2) {
                         inf_var1 = inf_var1 + 'gestion, des_mes,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS gestion,''TOTAL'' AS des_mes,`;
                     }
                     if (periocidad.cod_periodicidad == 3) {
                         inf_var1 = inf_var1 + 'gestion,trimestre,des_mes,'
+                        inf_var4 = inf_var4 + `''TOTAL'' AS gestion,''TOTAL'' AS trimestre,''TOTAL'' AS des_mes,`;
                     }
                     var gestiones_cad = '';
                     for (const gestion of gestiones) {
@@ -39,12 +43,54 @@ async function resultadoExportacion(req, res) {
                 }
               
                 //fin var 1 armar info y var 3 
+                //NANDINA
+                const selectedNandina = postData.paso2Informacion.selectedNandina;
+                const selectedSubNandina = postData.paso2Informacion.selectedSubNandina;
+                const selectedSubNandinaDatos = postData.paso2Informacion.selectedSubNandinaDatos;
+
+                if (selectedNandina && selectedSubNandina && selectedSubNandinaDatos && selectedSubNandinaDatos.length > 0) {
+                    var nandina_cad = '';
+                    for (const selectedSubNandinaDato of selectedSubNandinaDatos) {
+                        if(selectedSubNandina == 1){
+                            nandina_cad = nandina_cad + selectedSubNandinaDato.cod_niv1 + ','
+                        }else{
+                            nandina_cad = nandina_cad + "''"+selectedSubNandinaDato.cod_niv1+"''"+ ','
+                        }
+                    }
+                    if (nandina_cad.endsWith(',')) {
+                        nandina_cad = nandina_cad.slice(0, -1);
+                    }
+
+                    if(selectedSubNandina == 1){
+                        inf_var1 = inf_var1 + 'n_des_seccion,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS n_des_seccion,`;
+                        inf_var3 = inf_var3 + 'n_cod_seccion IN ( ' + nandina_cad + ') and '
+                    }
+                    if(selectedSubNandina == 2){
+                        inf_var1 = inf_var1 + 'n_des_capitulo,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS n_des_capitulo,`;
+                        inf_var3 = inf_var3 + 'n_capitulo IN ( ' + nandina_cad + ') and '
+                    }
+                    if(selectedSubNandina == 3){
+                        inf_var1 = inf_var1 + 'des_partida,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_partida,`;
+                        inf_var3 = inf_var3 + 'cod_partida IN ( ' + nandina_cad + ') and '
+                    }
+                    if(selectedSubNandina == 4){
+                        inf_var1 = inf_var1 + 'des_nandina,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_nandina,`;
+                        inf_var3 = inf_var3 + 'n_cod_nandina IN ( ' + nandina_cad + ') and '
+                    }
+                }
+
+               
                 //departamento
 
                 const despartamentos = postData.paso2Informacion.selectedDepartamentos;
 
                 if (despartamentos && despartamentos.length > 0) {
                     inf_var1 = inf_var1 + 'd_des,';
+                    inf_var4 = inf_var4 + `''TOTAL'' AS d_des,`;
                     
                     var despartamentos_cad = '';
                     for (const despartamento of despartamentos) {
@@ -61,6 +107,7 @@ async function resultadoExportacion(req, res) {
                 const continentes = postData.paso2Informacion.selectedContinentes;
                 if (continentes && continentes.length > 0) {
                     inf_var1 = inf_var1 + 'des_continente,';
+                    inf_var4 = inf_var4 + `''TOTAL'' AS des_continente,`;
                     
                     var continentes_cad = '';
                     for (const continente of continentes) {
@@ -76,6 +123,7 @@ async function resultadoExportacion(req, res) {
                  const paises = postData.paso2Informacion.selectedPaises;
                  if (paises && paises.length > 0) {
                      inf_var1 = inf_var1 + 'p_des,';
+                     inf_var4 = inf_var4 + `''TOTAL'' AS p_des,`;
                      
                      var paises_cad = '';
                      for (const pais of paises) {
@@ -90,6 +138,7 @@ async function resultadoExportacion(req, res) {
                  const medios = postData.paso2Informacion.selectedMedios;
                  if (medios && medios.length > 0) {
                      inf_var1 = inf_var1 + 'm_des,';
+                     inf_var4 = inf_var4 + `''TOTAL'' AS m_des,`;
                      
                      var medios_cad = '';
                      for (const medio of medios) {
@@ -105,6 +154,7 @@ async function resultadoExportacion(req, res) {
                   const vias = postData.paso2Informacion.selectedVias;
                   if (vias && vias.length > 0) {
                       inf_var1 = inf_var1 + 'v_des,';
+                      inf_var4 = inf_var4 + `''TOTAL'' AS v_des,`;
                       
                       var vias_cad = '';
                       for (const via of vias) {
@@ -139,6 +189,9 @@ async function resultadoExportacion(req, res) {
             if (inf_var3.endsWith(' and ')) {
                 inf_var3 = inf_var3.slice(0, -5);
             }
+            if (inf_var4.endsWith(',')) {
+                inf_var4 = inf_var4.slice(0, -1);
+            }
             //
             break
             case 2:
@@ -150,14 +203,12 @@ async function resultadoExportacion(req, res) {
         const var1 = inf_var1;
         const var2 = cuantitativaq;
         const var3 = inf_var3;
-
-        /*console.log(var1);
-        console.log(var2);
-        console.log(var3);*/
-
-        console.log(`EXEC ConsultaDinamica '${var1}', '${var2}', '${var3}'`);
+        const var4 = inf_var4;
 
         const result = await sequelize.query(`EXEC ConsultaDinamica '${var1}', '${var2}', '${var3}'`, {
+            type: sequelize.QueryTypes.SELECT
+        });
+        const resultTotales = await sequelize.query(`EXEC ConsultaDinamicaTotales '${var4}', '${var2}', '${var3}'`, {
             type: sequelize.QueryTypes.SELECT
         });
         var headers = [];
@@ -168,7 +219,7 @@ async function resultadoExportacion(req, res) {
                 return { field: header };
             });
         }
-        return res.status(200).json({ headers, colDefs, result });
+        return res.status(200).json({ headers, colDefs, result, resultTotales });
 
     } catch (err) {
         console.error('Error al ejecutar el procedimiento almacenado:', err);

@@ -283,7 +283,7 @@ async function indexSub(req, res) {
          break;
 
          case "19":
-            data =  await sequelize.query(' select cod_tradicional_clase as cod_niv2 ,des_tradicional_clase as des_niv2,cod_tradicional as cod_niv1,des_tradicional as des_niv1 from tnt where cod_tradicional is not null group by cod_tradicional_clase,des_tradicional_clase,cod_tradicional,des_tradicional ',{type: Sequelize.QueryTypes.SELECT});
+            data =  await sequelize.query(' select cod_tradicional as cod_niv2, des_tradicional as des_niv2 , cod_tradicional_clase as cod_niv1 ,des_tradicional_clase as des_niv1  from tnt where cod_tradicional is not null group by cod_tradicional_clase,des_tradicional_clase,cod_tradicional,des_tradicional ',{type: Sequelize.QueryTypes.SELECT});
             tipoRes = 'listadoAgrupado';
          break;
 

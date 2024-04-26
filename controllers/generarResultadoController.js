@@ -83,7 +83,116 @@ async function resultadoExportacion(req, res) {
                     }
                 }
 
-               
+                //clasificadores 
+                const selectedClasificacion = postData.paso2Informacion.selectedClasificacion;
+                const selectedSubCualitativas = postData.paso2Informacion.selectedSubCualitativas;
+                const selectedSubCualitativasDatos = postData.paso2Informacion.selectedSubCualitativasDatos;
+
+                if (selectedClasificacion && selectedSubCualitativas && selectedSubCualitativasDatos && selectedSubCualitativasDatos.length > 0) {
+
+                    console.log('selectedClasificacion',selectedClasificacion);
+                    console.log('selectedSubCualitativas',selectedSubCualitativas);
+                    console.log('selectedSubCualitativasDatos',selectedSubCualitativasDatos);
+
+                    var clasificadores_cad = '';
+                    for (const selectedSubCualitativasDato of selectedSubCualitativasDatos) {
+                        if(selectedSubCualitativas == 1){
+                            clasificadores_cad = clasificadores_cad + selectedSubCualitativasDato.cod_niv1 + ','
+                        }else{
+                            clasificadores_cad = clasificadores_cad + "''"+selectedSubCualitativasDato.cod_niv1+"''"+ ','
+                        }
+                    }
+
+                    if (clasificadores_cad.endsWith(',')) {
+                        clasificadores_cad = clasificadores_cad.slice(0, -1);
+                    }
+
+                    if(selectedSubCualitativas == 5){
+                        inf_var1 = inf_var1 + 'cu3_des_seccion,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS cu3_des_seccion,`;
+                        inf_var3 = inf_var3 + 'cu3_cod_seccion IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 6){
+                        inf_var1 = inf_var1 + 'cu3_des_capitulo,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS cu3_des_capitulo,`;
+                        inf_var3 = inf_var3 + 'n_capitulo IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 7){
+                        inf_var1 = inf_var1 + 'cu3_des_grupo,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS cu3_des_grupo,`;
+                        inf_var3 = inf_var3 + 'cu3_cod_grupo IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 8){
+                        inf_var1 = inf_var1 + 'des_cuci3,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_cuci3,`;
+                        inf_var3 = inf_var3 + 'cu3_cod_cuci3 IN ( ' + clasificadores_cad + ') and '
+                    }
+
+                    if(selectedSubCualitativas == 9){
+                        inf_var1 = inf_var1 + 'des_categoria,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_categoria,`;
+                        inf_var3 = inf_var3 + 'cod_categoria IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 10){
+                        inf_var1 = inf_var1 + 'des_division,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_division,`;
+                        inf_var3 = inf_var3 + 'cod_division IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 11){
+                        inf_var1 = inf_var1 + 'ci3_des_grupo,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS ci3_des_grupo,`;
+                        inf_var3 = inf_var3 + 'ci3_cod_grupo IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 12){
+                        inf_var1 = inf_var1 + 'des_ciiu3,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_ciiu3,`;
+                        inf_var3 = inf_var3 + 'ci3_cod_ciiu3 IN ( ' + clasificadores_cad + ') and '
+                    }
+
+                    if(selectedSubCualitativas == 13){
+                        inf_var1 = inf_var1 + 'des_catego_gran,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_catego_gran,`;
+                        inf_var3 = inf_var3 + 'cod_catego_gran IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 14){
+                        inf_var1 = inf_var1 + 'des_catego_bas,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_catego_bas,`;
+                        inf_var3 = inf_var3 + 'cod_catego_bas IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 15){
+                        inf_var1 = inf_var1 + 'des_gce3,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_gce3,`;
+                        inf_var3 = inf_var3 + 'g3_cod_gce3 IN ( ' + clasificadores_cad + ') and '
+                    }
+
+                    if(selectedSubCualitativas == 16){
+                        inf_var1 = inf_var1 + 'des_actividad,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_actividad,`;
+                        inf_var3 = inf_var3 + 'cod_actividad  IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 17){
+                        inf_var1 = inf_var1 + 'des_acteco,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_acteco ,`;
+                        inf_var3 = inf_var3 + 'ac_cod_acteco IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 18){
+                        inf_var1 = inf_var1 + 'des_tradicional,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_tradicional,`;
+                        inf_var3 = inf_var3 + 'cod_tradicional IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 19){
+                        inf_var1 = inf_var1 + 'des_tradicional_clase,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_tradicional_clase,`;
+                        inf_var3 = inf_var3 + 'cod_tradicional_clase IN ( ' + clasificadores_cad + ') and '
+                    }
+                    if(selectedSubCualitativas == 20){
+                        inf_var1 = inf_var1 + 'des_tnt,';
+                        inf_var4 = inf_var4 + `''TOTAL'' AS des_tnt,`;
+                        inf_var3 = inf_var3 + 'tnt_cod_tnt IN ( ' + clasificadores_cad + ') and '
+                    }
+                }
+
+
                 //departamento
 
                 const despartamentos = postData.paso2Informacion.selectedDepartamentos;

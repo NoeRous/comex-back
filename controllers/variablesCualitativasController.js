@@ -219,7 +219,10 @@ async function indexSub(req, res) {
             tipoRes = 'listadoAgrupadoDoble';
           break;
         case "4":
-            data =  await sequelize.query(' select cod_seccion as cod_niv3,des_seccion as des_niv3, cod_capitulo as cod_niv2, des_capitulo as des_niv2, cod_nandina as cod_niv1, des_nandina as des_niv1 from nandina group by cod_seccion,des_seccion, cod_capitulo, des_capitulo, cod_nandina, des_nandina order by cod_capitulo',{type: Sequelize.QueryTypes.SELECT});
+            /*data =  await sequelize.query(' select cod_seccion as cod_niv3,des_seccion as des_niv3, cod_capitulo as cod_niv2, des_capitulo as des_niv2, cod_nandina as cod_niv1, des_nandina as des_niv1 from nandina group by cod_seccion,des_seccion, cod_capitulo, des_capitulo, cod_nandina, des_nandina order by cod_capitulo',{type: Sequelize.QueryTypes.SELECT});
+            tipoRes = 'listadoAgrupadoDoble';*/
+
+            data =  await sequelize.query(' select DISTINCt cod_seccion as cod_niv3,des_seccion as des_niv3, cod_capitulo as cod_niv2, des_capitulo as des_niv2, cod_nandina as cod_niv1, des_nandina as des_niv1 from nandina order by cod_capitulo',{type: Sequelize.QueryTypes.SELECT});
             tipoRes = 'listadoAgrupadoDoble';
           break;
         case "5":
